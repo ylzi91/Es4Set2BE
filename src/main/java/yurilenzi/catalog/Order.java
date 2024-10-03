@@ -18,13 +18,10 @@ public class Order {
     }
 
     public void addProduct(Product prd){
-        products.add(prd);
-    }
-
-    public void order(){
         status = Status.ORDERED;
         orderDate = LocalDate.now();
         id++;
+        products.add(prd);
     }
     public void shipped(){
         status = Status.SHIPPED;
