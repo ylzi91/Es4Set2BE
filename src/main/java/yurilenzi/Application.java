@@ -8,6 +8,7 @@ import yurilenzi.catalog.Product;
 import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Application {
 
@@ -27,7 +28,7 @@ public class Application {
         List <Product> randomProd = new ArrayList<>();
         List <Order> randomOrderForCustomer = new ArrayList<>();
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 120; i++) {
             randomProd.add(productSupplier.get());
         }
 
@@ -56,8 +57,16 @@ public class Application {
         aaa.forEach((cst, total) -> {
             System.out.println("Cliente:" + cst + ", Totale da pagare: " + total);
         });
-
-
+        System.out.println("-------------------------------Esercizio 4-------------------------------------------");
+        List<OptionalDouble> averageOrder = randomOrderForCustomer.stream().map(order -> order.getProducts().stream().mapToDouble(prod -> prod.getPrice()).average()).toList();
+        averageOrder.forEach(avr -> {
+            System.out.println(avr);
+        });
+        System.out.println("-------------------------------Esercizio 5-------------------------------------------");
+        Map<String, Double> sumProd = randomProd.stream().collect(Collectors.groupingBy(product -> product.getCategory(), Collectors.summingDouble(Product::getPrice)));
+        sumProd.forEach((cst, total) -> {
+            System.out.println("Categoria:" + cst + ", Totale della categoria: " + total);
+        });
     }
 
     public static void viewProduct(List<Product> prd) {
